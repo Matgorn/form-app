@@ -1,87 +1,125 @@
-import React, { useState } from 'react';
-import { Paper, Button } from '@material-ui/core';
-import { Form as FormWrapper } from 'react-final-form';
-
-import DefaultField from './DefaultField/DefaultField';
+import React from 'react';
+import { Paper, Button, TextField } from '@material-ui/core';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import { createEvent } from '../../api';
 
 import useStyles from './styles';
 
-const Form = ({ onSubmit, setUpdateEvents }) => {
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const classes = useStyles();
+const validationSchema = yup.object({
+  firstName: yup.string('Enter your first name').required('This field is required'),
+  lastName: yup.string('Enter your last name').required('This field is required'),
+  eMail: yup
+    .string('Enter your first name')
+    .email('Enter a valid email')
+    .required('This field is required'),
+  eventDate: yup.date('Enter valid date').required('This field is required')
+});
 
-  const required = (value) => (value ? undefined : 'Required');
-  const mustBeEmail = (value) => (/.+@.+\..+/g.test(value) ? undefined : 'Provide valid email');
-  const mustBeDateFormat = (value) =>
-    /\d{4}-\d{2}-\d{2}/g.test(value) ? undefined : 'Enter valid date';
-  const composeValidators =
-    (...validators) =>
-    (value) =>
-      validators.reduce((error, validator) => error || validator(value), undefined);
+const Form = ({ setUpdateEvents }) => {
+  const classes = useStyles();
+  const {
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    handleReset,
+    errors,
+    touched,
+    values,
+    isSubmitting
+  } = useFormik({
+    initialValues: {
+      firstName: '',
+      lastName: '',
+      eMail: '',
+      eventDate: ''
+    },
+    validationSchema,
+    onSubmit: async (values) => {
+      await createEvent(values);
+
+      setUpdateEvents(true);
+      handleReset();
+    }
+  });
 
   return (
     <Paper className={classes.paper}>
-      <FormWrapper
-        onSubmit={(values) => onSubmit({ values, setShowSuccessMessage, setUpdateEvents })}
-        render={({ handleSubmit, form, submitting, pristine }) => (
-          <form onSubmit={handleSubmit}>
-            <DefaultField
-              className={classes.field}
-              name="firstName"
-              validate={required}
-              label="First Name"
-            />
+      <form onSubmit={handleSubmit}>
+        <TextField
+          className={classes.field}
+          fullWidth
+          name="firstName"
+          label="First Name"
+          variant="outlined"
+          value={values.firstName}
+          onChange={handleChange}
+          error={touched.firstName && Boolean(errors.firstName)}
+          helperText={touched.firstName && errors.firstName}
+          onBlur={handleBlur}
+        />
 
-            <DefaultField
-              className={classes.field}
-              name="lastName"
-              validate={required}
-              label="Last Name"
-            />
+        <TextField
+          className={classes.field}
+          name="lastName"
+          fullWidth
+          label="Last Name"
+          variant="outlined"
+          value={values.lastName}
+          onChange={handleChange}
+          error={touched.lastName && Boolean(errors.lastName)}
+          helperText={touched.lastName && errors.lastName}
+          onBlur={handleBlur}
+        />
 
-            <DefaultField
-              className={classes.field}
-              name="eMail"
-              validate={composeValidators(required, mustBeEmail)}
-              label="Email"
-            />
+        <TextField
+          className={classes.field}
+          name="eMail"
+          fullWidth
+          label="Email"
+          variant="outlined"
+          value={values.eMail}
+          onChange={handleChange}
+          error={touched.eMail && Boolean(errors.eMail)}
+          helperText={touched.eMail && errors.eMail}
+          onBlur={handleBlur}
+        />
 
-            <DefaultField
-              className={classes.field}
-              name="eventDate"
-              validate={composeValidators(required, mustBeDateFormat)}
-              type="date"
-              margin="normal"
-            />
+        <TextField
+          className={classes.field}
+          name="eventDate"
+          fullWidth
+          type="date"
+          margin="normal"
+          variant="outlined"
+          value={values.eventDate}
+          onChange={handleChange}
+          error={touched.eventDate && Boolean(errors.eventDate)}
+          helperText={touched.eventDate && errors.eventDate}
+          onBlur={handleBlur}
+        />
 
-            <div>
-              <Button
-                className={classes.field}
-                fullWidth
-                type="submit"
-                variant="contained"
-                color="primary"
-                disabled={submitting}>
-                Submit
-              </Button>
-              <Button
-                className={`${classes.field} reset-button`}
-                fullWidth
-                variant="contained"
-                color="secondary"
-                type="button"
-                onClick={form.reset}
-                disabled={submitting || pristine}>
-                Reset
-              </Button>
-            </div>
-          </form>
-        )}></FormWrapper>
-      {showSuccessMessage && (
-        <div data-testid="success-message" className="success-message">
-          Event has been added
+        <div>
+          <Button
+            className={classes.field}
+            fullWidth
+            type="submit"
+            variant="contained"
+            color="primary">
+            Submit
+          </Button>
+          <Button
+            className={`${classes.field} reset-button`}
+            fullWidth
+            variant="contained"
+            color="secondary"
+            type="button"
+            onClick={handleReset}
+            disabled={isSubmitting}>
+            Reset
+          </Button>
         </div>
-      )}
+      </form>
     </Paper>
   );
 };
