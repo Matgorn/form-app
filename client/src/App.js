@@ -11,7 +11,7 @@ const App = () => {
   return (
     <Container maxWidth="lg">
       <Grow in>
-        <Container maxWidth='sm'>
+        <Container maxWidth="sm">
           <Form setUpdateEvents={setUpdateEvents} onSubmit={onSubmit} />
           <Events updateEvents={updateEvents} setUpdateEvents={setUpdateEvents} />
         </Container>

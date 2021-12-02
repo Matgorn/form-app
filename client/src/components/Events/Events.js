@@ -12,24 +12,24 @@ const Events = ({ setUpdateEvents, updateEvents }) => {
   useEffect(() => {
     fetchEvents({ setIsLoaded, setEvents, setError });
     setUpdateEvents(false);
-  }, [updateEvents, setUpdateEvents])
+  }, [updateEvents, setUpdateEvents]);
 
   if (error) {
-    return <div>Error: {error.message}</div>
+    return <div>Error: {error.message}</div>;
   } else if (!isLoaded) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   } else {
     return (
       <>
         <h1>Events</h1>
         <Grid container spacing={4}>
           {events.map((eventProps, idx) => (
-            <Event key={idx} {...eventProps}  />
+            <Event key={idx} {...eventProps} />
           ))}
         </Grid>
       </>
     );
-  };
+  }
 };
 
 export default Events;

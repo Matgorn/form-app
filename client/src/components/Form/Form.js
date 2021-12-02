@@ -10,10 +10,14 @@ const Form = ({ onSubmit, setUpdateEvents }) => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const classes = useStyles();
 
-  const required = (value) => (value ? undefined : "Required");
+  const required = (value) => (value ? undefined : 'Required');
   const mustBeEmail = (value) => (/.+@.+\..+/g.test(value) ? undefined : 'Provide valid email');
-  const mustBeDateFormat = (value) => /\d{4}-\d{2}-\d{2}/g.test(value) ? undefined : 'Enter valid date'
-  const composeValidators = (...validators) => (value) => validators.reduce((error, validator) => error || validator(value), undefined);
+  const mustBeDateFormat = (value) =>
+    /\d{4}-\d{2}-\d{2}/g.test(value) ? undefined : 'Enter valid date';
+  const composeValidators =
+    (...validators) =>
+    (value) =>
+      validators.reduce((error, validator) => error || validator(value), undefined);
 
   return (
     <Paper className={classes.paper}>
@@ -21,56 +25,63 @@ const Form = ({ onSubmit, setUpdateEvents }) => {
         onSubmit={(values) => onSubmit({ values, setShowSuccessMessage, setUpdateEvents })}
         render={({ handleSubmit, form, submitting, pristine }) => (
           <form onSubmit={handleSubmit}>
-            <DefaultField 
+            <DefaultField
               className={classes.field}
-              name='firstName'
+              name="firstName"
               validate={required}
-              label='First Name'
+              label="First Name"
             />
 
-            <DefaultField 
+            <DefaultField
               className={classes.field}
-              name='lastName'
+              name="lastName"
               validate={required}
-              label='Last Name'
+              label="Last Name"
             />
 
-            <DefaultField 
+            <DefaultField
               className={classes.field}
-              name='eMail'
+              name="eMail"
               validate={composeValidators(required, mustBeEmail)}
-              label='Email'
+              label="Email"
             />
 
-            <DefaultField 
+            <DefaultField
               className={classes.field}
-              name='eventDate'
+              name="eventDate"
               validate={composeValidators(required, mustBeDateFormat)}
-              type='date'
-              margin='normal'
+              type="date"
+              margin="normal"
             />
 
             <div>
-              <Button className={classes.field} fullWidth type="submit" variant="contained" color='primary' disabled={submitting}>
+              <Button
+                className={classes.field}
+                fullWidth
+                type="submit"
+                variant="contained"
+                color="primary"
+                disabled={submitting}>
                 Submit
               </Button>
               <Button
                 className={`${classes.field} reset-button`}
                 fullWidth
-                variant='contained'
-                color='secondary'
+                variant="contained"
+                color="secondary"
                 type="button"
                 onClick={form.reset}
-                disabled={submitting || pristine}
-              >
+                disabled={submitting || pristine}>
                 Reset
               </Button>
             </div>
           </form>
-        )}
-      >
-      </FormWrapper>
-      {showSuccessMessage && <div data-testid="success-message" className="success-message">Event has been added</div>}
+        )}></FormWrapper>
+      {showSuccessMessage && (
+        <div data-testid="success-message" className="success-message">
+          Event has been added
+        </div>
+      )}
     </Paper>
   );
 };

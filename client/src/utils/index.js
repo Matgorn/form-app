@@ -14,6 +14,10 @@ export const onSubmit = async ({ values, setShowSuccessMessage, setUpdateEvents 
     }
   } catch (err) {
     const errorMessages = err.response.data.errors;
-    return Object.keys(err.response.data.errors).reduce((errors, field) => errorMessages[field] ? { ...errors, [field]: errorMessages[field] } : errors, {});
+    return Object.keys(err.response.data.errors).reduce(
+      (errors, field) =>
+        errorMessages[field] ? { ...errors, [field]: errorMessages[field] } : errors,
+      {}
+    );
   }
 };

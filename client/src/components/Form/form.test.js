@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react'
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import Form, { onSubmit } from './Form.js';
 
@@ -11,7 +11,7 @@ const getInputs = (container) => {
   const resetButton = container.querySelector('.reset-button');
   const submit = container.querySelector('.MuiButton-containedPrimary');
 
-  return { firstName, lastName, eMail, eventDate, resetButton, submit }
+  return { firstName, lastName, eMail, eventDate, resetButton, submit };
 };
 
 const fillInputs = async ({ firstName, lastName, eMail, eventDate }) => {
@@ -20,7 +20,7 @@ const fillInputs = async ({ firstName, lastName, eMail, eventDate }) => {
       target: {
         value: 'testName'
       }
-    })
+    });
   });
 
   await waitFor(() => {
@@ -36,7 +36,7 @@ const fillInputs = async ({ firstName, lastName, eMail, eventDate }) => {
       target: {
         value: 'testMail@mail.com'
       }
-    })
+    });
   });
 
   await waitFor(() => {
@@ -44,20 +44,20 @@ const fillInputs = async ({ firstName, lastName, eMail, eventDate }) => {
       target: {
         value: '2000-01-01'
       }
-    })
+    });
   });
-}
+};
 
 describe('Form component working correctly', () => {
   test('Shows error message if submitted with no values', async () => {
     const { container } = render(<Form />);
-    
+
     const submit = container.querySelector('.MuiButton-containedPrimary');
     const errorMsg = container.querySelector('.Mui-error');
     expect(container.contains(errorMsg)).toBe(false);
 
     await waitFor(() => {
-      fireEvent.click(submit)
+      fireEvent.click(submit);
     });
 
     const errorMessageAfterSubmit = container.querySelector('.Mui-error');
@@ -69,7 +69,7 @@ describe('Form component working correctly', () => {
   test('Reset button to be disabled without values', (done) => {
     const { container } = render(<Form />);
     const resetButton = container.querySelector('.MuiButton-containedSecondary');
-    
+
     expect(resetButton).toHaveProperty('disabled', true);
     done();
   });
@@ -83,9 +83,9 @@ describe('Form component working correctly', () => {
         target: {
           value: 'testName'
         }
-      })
+      });
     });
-    
+
     expect(resetButton).toHaveProperty('disabled', false);
     done();
   });
@@ -99,17 +99,17 @@ describe('Form component working correctly', () => {
     expect(container.contains(errorMessage)).toBe(false);
 
     await waitFor(() => {
-      fireEvent.focus(input)
+      fireEvent.focus(input);
     });
 
     await waitFor(() => {
-      fireEvent.blur(input)
+      fireEvent.blur(input);
     });
 
     const errorMessageAfterTouch = firstNameContainer.querySelector('.Mui-error');
 
     expect(container.contains(errorMessageAfterTouch)).toBe(true);
-    done()
+    done();
   });
 
   test('Shows success message and no errors if submitted with valid values', async (done) => {
@@ -121,22 +121,21 @@ describe('Form component working correctly', () => {
     expect(container.querySelector('.Mui-error')).toBeNull();
     expect(container.contains(successMessage)).toBe(false);
 
-    await fillInputs({firstName, lastName, eMail, eventDate})
+    await fillInputs({ firstName, lastName, eMail, eventDate });
 
     await waitFor(() => {
       fireEvent.click(submit);
     });
 
     expect(onSubmit).toHaveBeenCalled();
-    done()
+    done();
   });
 
-
-  test('Reset button clears all fields', async done => {
+  test('Reset button clears all fields', async (done) => {
     const { container } = render(<Form onSubmit={onSubmit} />);
     const { firstName, lastName, eMail, eventDate, resetButton } = getInputs(container);
 
-   await fillInputs({firstName, lastName, eMail, eventDate})
+    await fillInputs({ firstName, lastName, eMail, eventDate });
 
     expect(firstName.value).toEqual('testName');
     expect(lastName.value).toEqual('testLastName');
@@ -144,7 +143,7 @@ describe('Form component working correctly', () => {
     expect(eventDate.value).toEqual('2000-01-01');
 
     await waitFor(() => {
-      fireEvent.click(resetButton)
+      fireEvent.click(resetButton);
     });
 
     expect(firstName.value).toEqual('');
