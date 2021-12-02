@@ -19,11 +19,12 @@ export const fetchEvents = async ({ setIsLoaded, setEvents, setError }) => {
 
   if (fetchedEvents.error) {
     setIsLoaded(true);
-    setError(fetchedEvents.error)
+    setError(fetchedEvents.error);
+    return;
   }
 
   if (fetchedEvents) {
-    const result = fetchedEvents.map(event => ({
+    const result = fetchedEvents?.map(event => ({
       ...event,
       eventDate: moment(event.eventDate).format('YYYY-MM-DD')
     }));
