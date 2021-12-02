@@ -15,7 +15,13 @@ module.exports.createEvent = async (event) => {
   }
 };
 
-module.exports.deleteEvent = async () => {};
+module.exports.deleteEvent = async (eventId) => {
+  try {
+    return Event.findByIdAndDelete(eventId);
+  } catch(err) {
+    throw err
+  }
+};
 
 module.exports.getEvents = async () => {
   try {

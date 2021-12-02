@@ -14,7 +14,15 @@ router.get('/', async (req, res) => {
   };
 });
 
-router.delete('/:eventId', async (req, res) => {});
+router.delete('/:eventId', async (req, res) => {
+  try {
+    await deleteEvent(req.params.eventId);
+
+    res.status(201).json({ message: `Event ${req.params.eventId} successfully deleted`})
+  } catch(errors) {
+    res.status(409).json({ errors })
+  }
+});
 
 router.post('/', async (req, res) => {
   const event = req.body;
