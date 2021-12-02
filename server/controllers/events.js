@@ -15,6 +15,8 @@ module.exports.createEvent = async (event) => {
   }
 };
 
+module.exports.deleteEvent = async () => {};
+
 module.exports.getEvents = async () => {
   try {
     const events = await Event.find();

@@ -1,6 +1,6 @@
 const { Router } = require('express');
 
-const { getEvents, createEvent } = require('../controllers/events.js');
+const { getEvents, createEvent, deleteEvent } = require('../controllers/events.js');
 
 const router = Router();
 
@@ -13,6 +13,8 @@ router.get('/', async (req, res) => {
     res.status(404).json({ message: error.message });
   };
 });
+
+router.delete('/:eventId', async (req, res) => {});
 
 router.post('/', async (req, res) => {
   const event = req.body;

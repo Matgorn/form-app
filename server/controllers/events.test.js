@@ -1,6 +1,6 @@
 const dbHandler = require('../tests/db.js');
 const Event = require('../models/event.js');
-const { getEvents, createEvent } = require('./events.js');
+const { getEvents, createEvent, deleteEvent } = require('./events.js');
 
 beforeAll(async () => {
     await dbHandler.connect()
@@ -33,6 +33,7 @@ const mockedRouteHandler = async (eventData) => {
 describe('Controller functions working correctly', () => {
   it ('Has a module', async () => {
     expect(createEvent).toBeDefined();
+    expect(deleteEvent).toBeDefined();
   });
 
   it ('Successfully adds new valid Event', async() => {
@@ -127,5 +128,28 @@ describe('Controller functions working correctly', () => {
     const events = await getEvents();
 
     expect(events).toStrictEqual([])
+  });
+
+  it('Removes event by id', async () => {
+    const event1 = new Event({
+      firstName: 'testName',
+      lastName: 'testLastName',
+      eMail: 'testEmail@email.com',
+      eventDate: '2000-01-01'
+    });
+
+    await event1.save();
+
+    let events = await getEvents();
+    expect(events).toHaveLength(1);
+
+    const response = await deleteEvent(events[0]._id);
+    expect(response).toEqual(
+      expect.objectContaining({ firstName: 'testName' })
+    );
+
+    events = await getEvents();
+    expect(events).toHaveLength(0);
+    expect(events).toStrictEqual([]);
   });
 });
