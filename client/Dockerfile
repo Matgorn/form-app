@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM node:14-alpine3.12
 WORKDIR /usr/src/form-app
 
 ENV PATH /app/node_modules/.bin:$PATH
