@@ -16,7 +16,7 @@ const validationSchema = yup.object({
   eventDate: yup.date('Enter valid date').required('This field is required')
 });
 
-const Form = ({ setUpdateEvents }) => {
+const Form = ({ setUpdateEvents, handleModalClose }) => {
   const classes = useStyles();
   const {
     handleSubmit,
@@ -38,6 +38,7 @@ const Form = ({ setUpdateEvents }) => {
     onSubmit: async (values) => {
       await createEvent(values);
 
+      handleModalClose();
       setUpdateEvents(true);
       handleReset();
     }
