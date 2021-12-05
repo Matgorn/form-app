@@ -3,8 +3,6 @@ import { Container, Button } from '@material-ui/core';
 
 import { Events, Form, Modal } from '../../components';
 
-import { onSubmit } from '../../utils';
-
 const Home = () => {
   const [updateEvents, setUpdateEvents] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -18,11 +16,7 @@ const Home = () => {
   return (
     <Container maxWidth="sm">
       <Modal isOpen={modalOpen} handleModalClose={handleModalClose}>
-        <Form
-          setUpdateEvents={setUpdateEvents}
-          onSubmit={onSubmit}
-          handleModalClose={handleModalClose}
-        />
+        <Form setUpdateEvents={setUpdateEvents} handleModalClose={handleModalClose} />
       </Modal>
       <Button variant="contained" color="primary" onClick={handleButtonClick}>
         Add Event

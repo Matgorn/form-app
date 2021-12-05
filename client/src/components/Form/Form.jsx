@@ -2,7 +2,7 @@ import React from 'react';
 import { Paper, Button, TextField } from '@material-ui/core';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { createEvent } from '../../api';
+// import { ReactQueryDevtools } from 'react-query/devtools';
 
 import useStyles from './styles';
 
@@ -35,9 +35,7 @@ const Form = ({ setUpdateEvents, handleModalClose }) => {
       eventDate: ''
     },
     validationSchema,
-    onSubmit: async (values) => {
-      await createEvent(values);
-
+    onSubmit: async () => {
       handleModalClose();
       setUpdateEvents(true);
       handleReset();

@@ -1,29 +1,33 @@
-import React, { useEffect, useState } from 'react';
-
-import Event from './Event/Event';
-import { fetchEvents } from './utils';
+import { memo, useCallback, useEffect, useState } from 'react';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { Grid } from '@material-ui/core';
 
-const Events = ({ setUpdateEvents, updateEvents }) => {
-  const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [events, setEvents] = useState([]);
+import { getEvents as getEventsAction } from '../../store/events/actions';
 
-  useEffect(() => {
-    fetchEvents({ setIsLoaded, setEvents, setError });
-    setUpdateEvents(false);
-  }, [updateEvents, setUpdateEvents]);
+import Event from './Event/Event';
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  } else if (!isLoaded) {
+const Events = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const { events, error } = useSelector((state) => state, shallowEqual);
+  const getEvents = useCallback(() => getEventsAction());
+  const dispatch = useDispatch();
+
+  useEffect(async () => {
+    await dispatch(getEvents());
+
+    setIsLoading(false);
+  }, []);
+
+  if (error?.error) {
+    return <div>Error: {error?.error}</div>;
+  } else if (isLoading) {
     return <div>Loading...</div>;
   } else {
     return (
       <>
         <h1>Events</h1>
         <Grid container spacing={4}>
-          {events.map((eventProps, idx) => (
+          {events?.map((eventProps, idx) => (
             <Event key={idx} {...eventProps} />
           ))}
         </Grid>
@@ -32,4 +36,4 @@ const Events = ({ setUpdateEvents, updateEvents }) => {
   }
 };
 
-export default Events;
+export default memo(Events);
