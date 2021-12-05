@@ -1,6 +1,6 @@
 import { GET_EVENTS_SUCCESS, GET_EVENTS_ERROR } from './actionTypes';
 
-import * as EventsService from '../../services/events.service';
+import * as EventsService from '../../services/events';
 
 const getEventsSuccess = (results) => ({
   type: GET_EVENTS_SUCCESS,
