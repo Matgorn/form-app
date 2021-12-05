@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Container, Button } from '@material-ui/core';
+import { Container, Button, Grow } from '@material-ui/core';
 
 import { Events, Form, Modal } from '../../components';
 
@@ -14,14 +14,18 @@ const Home = () => {
   const handleModalClose = useCallback(() => setModalOpen(false));
 
   return (
-    <Container maxWidth="sm">
-      <Modal isOpen={modalOpen} handleModalClose={handleModalClose}>
-        <Form setUpdateEvents={setUpdateEvents} handleModalClose={handleModalClose} />
-      </Modal>
-      <Button variant="contained" color="primary" onClick={handleButtonClick}>
-        Add Event
-      </Button>
-      <Events updateEvents={updateEvents} setUpdateEvents={setUpdateEvents} />
+    <Container maxWidth="lg">
+      <Grow in>
+        <Container maxWidth="sm">
+          <Modal isOpen={modalOpen} handleModalClose={handleModalClose}>
+            <Form setUpdateEvents={setUpdateEvents} handleModalClose={handleModalClose} />
+          </Modal>
+          <Button variant="contained" color="primary" onClick={handleButtonClick}>
+            Add Event
+          </Button>
+          <Events updateEvents={updateEvents} setUpdateEvents={setUpdateEvents} />
+        </Container>
+      </Grow>
     </Container>
   );
 };

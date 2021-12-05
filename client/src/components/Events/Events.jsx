@@ -11,11 +11,13 @@ const Events = () => {
   const { events, error } = useSelector((state) => state, shallowEqual);
   const getEvents = useCallback(() => getEventsAction());
   const dispatch = useDispatch();
-
+  console.log('render events', isLoading);
   useEffect(async () => {
     await dispatch(getEvents());
 
-    setIsLoading(false);
+    if (isLoading) {
+      setIsLoading(false);
+    }
   }, []);
 
   if (error?.error) {
