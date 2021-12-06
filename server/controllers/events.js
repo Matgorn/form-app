@@ -23,6 +23,16 @@ module.exports.deleteEvent = async (eventId) => {
   }
 };
 
+module.exports.getEventById = async (eventId) => {
+  try {
+    const event = await Event.findById(eventId);
+
+    return event;
+  } catch (err) {
+    throw err
+  }
+}
+
 module.exports.getEvents = async () => {
   try {
     const events = await Event.find();

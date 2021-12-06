@@ -1,6 +1,6 @@
 const { Router } = require('express');
 
-const { getEvents, createEvent, deleteEvent } = require('../controllers/events.js');
+const { getEvents, createEvent, deleteEvent, getEventById } = require('../controllers/events.js');
 
 const router = Router();
 
@@ -10,8 +10,18 @@ router.get('/', async (req, res) => {
 
     res.status(200).json(events);
   } catch (err) {
-    res.status(404).json({ message: error.message });
+    res.status(404).json({ message: err.message });
   };
+});
+
+router.get('/:eventId', async (req, res) => {
+  try {
+    const event = await getEventById(req.params.eventId);
+
+    res.status(200).json(event);
+  } catch (err) {
+    res.status(404).json({ message: err.message })
+  }
 });
 
 router.delete('/:eventId', async (req, res) => {
