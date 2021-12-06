@@ -3,7 +3,7 @@ import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 
-import { Events, EventEdit } from './screens';
+import { Events, EventEdit, Wizard } from './screens';
 
 import { ErrorNotification } from './components';
 
@@ -30,6 +30,7 @@ const App = () => {
         <Route path="/" element={<Navigate to="/events" />} />
         <Route path="/events" element={<Events />} />
         <Route path="/events/edit/:eventId" element={<EventEdit />} />
+        <Route path="/wizard" element={<Wizard />} />
       </Routes>
     </div>
   );
