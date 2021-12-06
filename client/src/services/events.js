@@ -2,6 +2,8 @@ import api from '../api';
 
 export const getEvents = () => api.get('/events');
 
+export const getEventById = (eventId) => api.get(`/events/${eventId}`);
+
 export const createEvent = (eventData) => api.post('/events', eventData);
 
 export const deleteEvent = (eventId) => api.delete(`/events/${eventId}`);

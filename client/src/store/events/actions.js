@@ -23,6 +23,16 @@ export const getEvents = () => async (dispatch) => {
   }
 };
 
+export const getEventById = (eventId) => async (dispatch) => {
+  try {
+    const res = await EventsService.getEventById(eventId);
+
+    dispatch(getEventsSuccess([res.data]));
+  } catch (err) {
+    dispatch(getEventsError(err));
+  }
+};
+
 export const createEvent = (eventData) => async (dispatch) => {
   try {
     const newEvent = await EventsService.createEvent(eventData);

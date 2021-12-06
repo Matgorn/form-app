@@ -8,6 +8,13 @@ import { useDispatch } from 'react-redux';
 
 import { createEvent } from '../../store/events/actions';
 
+const schema = {
+  firstName: '',
+  lastName: '',
+  eMail: '',
+  eventDate: ''
+};
+
 const validationSchema = yup.object({
   firstName: yup.string('Enter your first name').required('This field is required'),
   lastName: yup.string('Enter your last name').required('This field is required'),
@@ -18,7 +25,7 @@ const validationSchema = yup.object({
   eventDate: yup.date('Enter valid date').required('This field is required')
 });
 
-const Form = ({ handleModalClose }) => {
+const Form = ({ handleModalClose, initialValues = schema, eventId = null }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const {
@@ -31,17 +38,15 @@ const Form = ({ handleModalClose }) => {
     values,
     isSubmitting
   } = useFormik({
-    initialValues: {
-      firstName: '',
-      lastName: '',
-      eMail: '',
-      eventDate: ''
-    },
+    initialValues,
     validationSchema,
     onSubmit: (values) => {
-      dispatch(createEvent(values));
-      handleModalClose();
-      handleReset();
+      if (!eventId) {
+        dispatch(createEvent(values));
+        handleModalClose();
+        handleReset();
+        return;
+      }
     }
   });
 
@@ -110,16 +115,18 @@ const Form = ({ handleModalClose }) => {
             color="primary">
             Submit
           </Button>
-          <Button
-            className={`${classes.field} reset-button`}
-            fullWidth
-            variant="contained"
-            color="secondary"
-            type="button"
-            onClick={handleReset}
-            disabled={isSubmitting}>
-            Reset
-          </Button>
+          {!eventId && (
+            <Button
+              className={`${classes.field} reset-button`}
+              fullWidth
+              variant="contained"
+              color="secondary"
+              type="button"
+              onClick={handleReset}
+              disabled={isSubmitting}>
+              Reset
+            </Button>
+          )}
         </div>
       </form>
     </Paper>

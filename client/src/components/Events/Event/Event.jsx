@@ -1,14 +1,20 @@
 import React, { useCallback } from 'react';
 import { Card, CardContent, Typography, Grid, Button } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { deleteEvent } from '../../../store/events/actions';
 
 const Post = ({ firstName, lastName, eMail, eventDate, _id }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleButtonClick = useCallback(() => {
+  const handleDeleteButtonClick = useCallback(() => {
     dispatch(deleteEvent(_id));
+  });
+
+  const handleEditButtonClick = useCallback(() => {
+    navigate(`/events/edit/${_id}`);
   });
 
   return (
@@ -22,8 +28,11 @@ const Post = ({ firstName, lastName, eMail, eventDate, _id }) => {
           <Typography variant="body2" component="p">
             {eventDate}
           </Typography>
-          <Button onClick={handleButtonClick} variant="outlined">
+          <Button onClick={handleDeleteButtonClick} variant="outlined">
             Delete
+          </Button>
+          <Button onClick={handleEditButtonClick} variant="outlined">
+            Edit
           </Button>
         </CardContent>
       </Card>

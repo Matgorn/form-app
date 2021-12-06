@@ -1,5 +1,6 @@
-import { CREATE_EVENT, DELETE_EVENT, GET_EVENTS_ERROR, GET_EVENTS_SUCCESS } from './actionTypes';
 import Immutable from 'seamless-immutable';
+
+import { CREATE_EVENT, DELETE_EVENT, GET_EVENTS_ERROR, GET_EVENTS_SUCCESS } from './actionTypes';
 
 const initialState = Immutable({
   data: [],
@@ -7,7 +8,7 @@ const initialState = Immutable({
   isLoading: true
 });
 
-function eventsReducer(state = initialState, action) {
+export default function eventsReducer(state = initialState, action) {
   const { type, payload, error } = action;
 
   switch (type) {
@@ -33,5 +34,3 @@ function eventsReducer(state = initialState, action) {
       return state;
   }
 }
-
-export default eventsReducer;
