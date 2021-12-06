@@ -3,11 +3,12 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getEventById } from '../../store/events/actions';
 import Form from '../../components/Form';
+import { getEventsWithValidDate } from '../../store/events/reducer';
 
 const EditEvent = () => {
   const { eventId } = useParams();
   const dispatch = useDispatch();
-  const { data: events, isLoading, error } = useSelector((state) => state?.events, shallowEqual);
+  const { data: eventsList, isLoading, error } = useSelector(getEventsWithValidDate, shallowEqual);
 
   useEffect(() => {
     dispatch(getEventById(eventId));
@@ -18,7 +19,7 @@ const EditEvent = () => {
   } else if (isLoading) {
     return <div>Loading...</div>;
   } else {
-    return <Form initialValues={events[0]} eventId={events[0]._id} />;
+    return <Form initialValues={eventsList[0]} eventId={eventsList[0]._id} />;
   }
 };
 

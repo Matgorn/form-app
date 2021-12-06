@@ -1,4 +1,6 @@
+import { createSelector } from 'reselect';
 import Immutable from 'seamless-immutable';
+import { getValidDateFormat } from '../../utils';
 
 import { CREATE_EVENT, DELETE_EVENT, GET_EVENTS_ERROR, GET_EVENTS_SUCCESS } from './actionTypes';
 
@@ -34,3 +36,17 @@ export default function eventsReducer(state = initialState, action) {
       return state;
   }
 }
+
+const getEvents = (state) => state.events;
+
+export const getEventsWithValidDate = createSelector([getEvents], (events) => {
+  const formattedEvents = events.data.map((event) => ({
+    ...event,
+    eventDate: getValidDateFormat(event.eventDate)
+  }));
+
+  return {
+    ...events,
+    data: formattedEvents
+  };
+});
