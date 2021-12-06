@@ -2,9 +2,11 @@ import React from 'react';
 import { Paper, Button, TextField } from '@material-ui/core';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-// import { ReactQueryDevtools } from 'react-query/devtools';
 
 import useStyles from './styles';
+import { useDispatch } from 'react-redux';
+
+import { createEvent } from '../../store/events/actions';
 
 const validationSchema = yup.object({
   firstName: yup.string('Enter your first name').required('This field is required'),
@@ -16,8 +18,9 @@ const validationSchema = yup.object({
   eventDate: yup.date('Enter valid date').required('This field is required')
 });
 
-const Form = ({ setUpdateEvents, handleModalClose }) => {
+const Form = ({ handleModalClose }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const {
     handleSubmit,
     handleChange,
@@ -35,9 +38,9 @@ const Form = ({ setUpdateEvents, handleModalClose }) => {
       eventDate: ''
     },
     validationSchema,
-    onSubmit: async () => {
+    onSubmit: (values) => {
+      dispatch(createEvent(values));
       handleModalClose();
-      setUpdateEvents(true);
       handleReset();
     }
   });

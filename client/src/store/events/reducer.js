@@ -1,4 +1,4 @@
-import { GET_EVENTS_ERROR, GET_EVENTS_SUCCESS } from './actionTypes';
+import { CREATE_EVENT, DELETE_EVENT, GET_EVENTS_ERROR, GET_EVENTS_SUCCESS } from './actionTypes';
 import Immutable from 'seamless-immutable';
 
 const initialState = Immutable({
@@ -20,6 +20,14 @@ function eventsReducer(state = initialState, action) {
       return state.merge({
         error,
         isLoading: false
+      });
+    case CREATE_EVENT:
+      return state.merge({
+        data: state.data.concat([payload.newEvent])
+      });
+    case DELETE_EVENT:
+      return state.merge({
+        data: state.data.filter(({ _id }) => _id !== payload.eventId)
       });
     default:
       return state;

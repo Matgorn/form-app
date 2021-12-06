@@ -4,7 +4,6 @@ import { Container, Button, Grow } from '@material-ui/core';
 import { Events, Form, Modal } from '../../components';
 
 const Home = () => {
-  const [updateEvents, setUpdateEvents] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleButtonClick = useCallback(() => {
@@ -18,12 +17,12 @@ const Home = () => {
       <Grow in>
         <Container maxWidth="sm">
           <Modal isOpen={modalOpen} handleModalClose={handleModalClose}>
-            <Form setUpdateEvents={setUpdateEvents} handleModalClose={handleModalClose} />
+            <Form handleModalClose={handleModalClose} />
           </Modal>
           <Button variant="contained" color="primary" onClick={handleButtonClick}>
             Add Event
           </Button>
-          <Events updateEvents={updateEvents} setUpdateEvents={setUpdateEvents} />
+          <Events />
         </Container>
       </Grow>
     </Container>

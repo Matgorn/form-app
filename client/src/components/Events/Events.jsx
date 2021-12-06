@@ -27,8 +27,8 @@ const Events = () => {
       <>
         <h1>Events</h1>
         <Grid container spacing={4}>
-          {eventsList?.map((eventProps, idx) => (
-            <Event key={idx} {...eventProps} />
+          {eventsList?.map((eventProps) => (
+            <Event key={eventProps?._id} {...eventProps} />
           ))}
         </Grid>
       </>
