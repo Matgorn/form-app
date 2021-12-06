@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, memo } from 'react';
 import { Container, Button, Grow } from '@material-ui/core';
 
 import { Events } from './components';
@@ -30,4 +30,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default memo(Home);

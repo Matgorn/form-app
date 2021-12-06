@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, memo } from 'react';
 import { Card, CardContent, Typography, Grid, Button } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -40,4 +40,4 @@ const Post = ({ firstName, lastName, eMail, eventDate, _id }) => {
   );
 };
 
-export default Post;
+export default memo(Post);

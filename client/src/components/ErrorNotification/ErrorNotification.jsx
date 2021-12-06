@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { Container, Button } from '@material-ui/core';
 
 import { Modal } from '..';
 
@@ -21,10 +22,12 @@ const ErrorNotification = () => {
 
   return (
     <Modal handleModalClose={handleClose} isOpen={isOpen}>
-      <div className="fancy-error-class">
-        <button onClick={handleClose}>Close Error</button>
-        <span>{error}</span>
-      </div>
+      <Container className="fancy-error-class">
+        <h3>{error}</h3>
+        <Button variant="outlined" onClick={handleClose}>
+          Close Error
+        </Button>
+      </Container>
     </Modal>
   );
 };
