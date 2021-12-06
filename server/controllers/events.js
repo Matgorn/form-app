@@ -33,6 +33,17 @@ module.exports.getEventById = async (eventId) => {
   }
 }
 
+module.exports.updateEvent = async (eventId, eventData) => {
+  try {
+    await Event.findByIdAndUpdate(eventId, eventData);
+    const updatedEvent = Event.findById(eventId)
+
+    return updatedEvent;
+  } catch (err) {
+    throw err;
+  }
+}
+
 module.exports.getEvents = async () => {
   try {
     const events = await Event.find();

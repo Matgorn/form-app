@@ -1,6 +1,6 @@
 const { Router } = require('express');
 
-const { getEvents, createEvent, deleteEvent, getEventById } = require('../controllers/events.js');
+const { getEvents, createEvent, deleteEvent, getEventById, updateEvent } = require('../controllers/events.js');
 
 const router = Router();
 
@@ -33,6 +33,16 @@ router.delete('/:eventId', async (req, res) => {
     res.status(409).json({ errors })
   }
 });
+
+router.put('/:eventId', async (req, res) => {
+  try {
+    const updatedEvent = await updateEvent(req.params.eventId, req.body)
+
+    res.status(201).json(updatedEvent)
+  } catch (errors) {
+    res.status(409).json({ errors })
+  }
+})
 
 router.post('/', async (req, res) => {
   const event = req.body;
