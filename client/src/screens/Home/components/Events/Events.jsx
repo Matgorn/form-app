@@ -1,10 +1,10 @@
 import { memo, useCallback, useEffect } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { Grid } from '@material-ui/core';
-import { getEvents as getEventsAction } from '../../store/events/actions';
+import { getEvents as getEventsAction } from '../../../../store/events/actions';
 
 import Event from './Event/Event';
-import { getEventsWithValidDate } from '../../store/events/reducer';
+import { getEventsWithValidDate } from '../../../../store/events/reducer';
 
 const Events = () => {
   const { data: eventsList, isLoading, error } = useSelector(getEventsWithValidDate, shallowEqual);

@@ -3,7 +3,7 @@ import { Card, CardContent, Typography, Grid, Button } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { deleteEvent } from '../../../store/events/actions';
+import { deleteEvent } from '../../../../../store/events/actions';
 
 const Post = ({ firstName, lastName, eMail, eventDate, _id }) => {
   const dispatch = useDispatch();

@@ -1,7 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { Container, Button, Grow } from '@material-ui/core';
 
-import { Events, Form, Modal } from '../../components';
+import { Events } from './components';
+import { Modal, Form } from '../../components';
 
 const Home = () => {
   const [modalOpen, setModalOpen] = useState(false);
