@@ -1,4 +1,4 @@
-import EditEvent from './EditEvent';
-import Home from './Home';
+import EventEdit from './Events/screens/Edit';
+import Events from './Events';
 
-export { EditEvent, Home };
+export { EventEdit, Events };
