@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { memo } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
