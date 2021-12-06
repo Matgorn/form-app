@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
   const event = req.body;
 
   try {
-    const { newEvent } = await createEvent(event)
+    const newEvent = await createEvent(event)
 
     res.status(201).json(newEvent);
   } catch (errors) {    
