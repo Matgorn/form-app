@@ -5,8 +5,9 @@ import * as yup from 'yup';
 
 import useStyles from './styles';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-import { createEvent } from '../../store/events/actions';
+import { createEvent, updateEvent } from '../../store/events/actions';
 
 const schema = {
   firstName: '',
@@ -27,7 +28,9 @@ const validationSchema = yup.object({
 
 const Form = ({ handleModalClose, initialValues = schema, eventId = null }) => {
   const classes = useStyles();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const {
     handleSubmit,
     handleChange,
@@ -40,11 +43,20 @@ const Form = ({ handleModalClose, initialValues = schema, eventId = null }) => {
   } = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (values) => {
+    enableReinitialize: true,
+    onSubmit: async (values) => {
       if (!eventId) {
         dispatch(createEvent(values));
         handleModalClose();
         handleReset();
+        return;
+      }
+
+      try {
+        await dispatch(updateEvent(eventId, values));
+
+        navigate('/events');
+      } catch (err) {
         return;
       }
     }

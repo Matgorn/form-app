@@ -1,4 +1,10 @@
-import { GET_EVENTS_SUCCESS, GET_EVENTS_ERROR, DELETE_EVENT, CREATE_EVENT } from './actionTypes';
+import {
+  GET_EVENTS_SUCCESS,
+  GET_EVENTS_ERROR,
+  DELETE_EVENT,
+  CREATE_EVENT,
+  UPDATE_EVENT
+} from './actionTypes';
 
 import * as EventsService from '../../services/events';
 
@@ -23,16 +29,6 @@ export const getEvents = () => async (dispatch) => {
   }
 };
 
-export const getEventById = (eventId) => async (dispatch) => {
-  try {
-    const res = await EventsService.getEventById(eventId);
-
-    dispatch(getEventsSuccess([res.data]));
-  } catch (err) {
-    dispatch(getEventsError(err));
-  }
-};
-
 export const createEvent = (eventData) => async (dispatch) => {
   try {
     const newEvent = await EventsService.createEvent(eventData);
@@ -43,6 +39,22 @@ export const createEvent = (eventData) => async (dispatch) => {
     });
   } catch (err) {
     console.log(err);
+  }
+};
+/*eslint-disable*/
+export const updateEvent = (eventId, eventData) => async (dispatch) => {
+  try {
+    const res = await EventsService.updateEvent(eventId, eventData);
+
+    dispatch({
+      type: UPDATE_EVENT,
+      payload: [],
+      error: 'Some error'
+    });
+
+    return Promise.reject(err);
+  } catch (err) {
+    return Promise.reject(err);
   }
 };
 

@@ -2,7 +2,13 @@ import { createSelector } from 'reselect';
 import Immutable from 'seamless-immutable';
 import { getValidDateFormat } from '../../utils';
 
-import { CREATE_EVENT, DELETE_EVENT, GET_EVENTS_ERROR, GET_EVENTS_SUCCESS } from './actionTypes';
+import {
+  CREATE_EVENT,
+  DELETE_EVENT,
+  GET_EVENTS_ERROR,
+  GET_EVENTS_SUCCESS,
+  UPDATE_EVENT
+} from './actionTypes';
 
 const initialState = Immutable({
   data: [],
@@ -27,6 +33,19 @@ export default function eventsReducer(state = initialState, action) {
     case CREATE_EVENT:
       return state.merge({
         data: state.data.concat([payload.newEvent])
+      });
+    case UPDATE_EVENT:
+      return state.merge({
+        data: state.data.map((event) => {
+          if (event._id === payload._id) {
+            return {
+              ...event,
+              ...payload
+            };
+          } else {
+            return event;
+          }
+        })
       });
     case DELETE_EVENT:
       return state.merge({
