@@ -1,15 +1,23 @@
 import Immutable from 'seamless-immutable';
+import { HIDE_ERROR } from './actionTypes';
 
 const initState = Immutable({
-  error: null
+  error: null,
+  isOpen: false
 });
 
 const errorReducer = (state = initState, action) => {
-  const { error } = action;
+  const { type, error } = action;
 
   if (error) {
-    state.merge({
-      error
+    return state.merge({
+      error,
+      isOpen: true
+    });
+  } else if (type === HIDE_ERROR) {
+    return state.merge({
+      error: null,
+      isOpen: false
     });
   }
 

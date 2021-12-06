@@ -7,8 +7,6 @@ export const getEventById = (eventId) => async (dispatch) => {
   try {
     const res = await EventsService.getEventById(eventId);
 
-    console.log(res.data);
-
     dispatch({
       type: GET_EVENT_BY_ID,
       payload: res.data
@@ -16,7 +14,7 @@ export const getEventById = (eventId) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: SET_ERROR,
-      error: err
+      error: err.message
     });
   }
 };

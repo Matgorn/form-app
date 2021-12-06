@@ -5,6 +5,7 @@ import {
   CREATE_EVENT,
   UPDATE_EVENT
 } from './actionTypes';
+import { SET_ERROR } from '../error/actionTypes';
 
 import * as EventsService from '../../services/events';
 
@@ -41,20 +42,20 @@ export const createEvent = (eventData) => async (dispatch) => {
     console.log(err);
   }
 };
-/*eslint-disable*/
+
 export const updateEvent = (eventId, eventData) => async (dispatch) => {
   try {
     const res = await EventsService.updateEvent(eventId, eventData);
 
     dispatch({
       type: UPDATE_EVENT,
-      payload: [],
-      error: 'Some error'
+      payload: res.data
     });
-
-    return Promise.reject(err);
   } catch (err) {
-    return Promise.reject(err);
+    dispatch({
+      type: SET_ERROR,
+      error: err.message
+    });
   }
 };
 
