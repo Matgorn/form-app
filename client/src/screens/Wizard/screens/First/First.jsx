@@ -35,7 +35,7 @@ const First = () => {
               <div key={index}>
                 {' '}
                 <Adress index={index} />
-                <Button type="button" onClick={() => arrayHelpers.remove(index)}>
+                <Button type="button" onClick={() => index > 0 && arrayHelpers.remove(index)}>
                   -
                 </Button>
                 <Button type="button" onClick={() => arrayHelpers.insert(index, '')}>

@@ -14,7 +14,17 @@ const validationSchema = yup.object({
     })
   ),
   secondQuestion: yup.string('Enter some answer').required('This field is required'),
-  thirdQuestion: yup.string('Enter some answer').required('This field is required')
+  thirdQuestion: yup.string('Enter some answer').required('This field is required'),
+  newsletter: yup.boolean().required('This field is required'),
+  // .oneOf([true], 'This agreement must be accepted.'),
+  birthDate: yup
+    .date()
+    .required('Birth date is required')
+    .when('newsletter', (newsletter) => {
+      if (newsletter) {
+        return yup.date().required().max('2001-01-01');
+      }
+    })
 });
 
 const Wizard = () => {
@@ -25,6 +35,8 @@ const Wizard = () => {
       firstQuestion: '',
       secondQuestion: '',
       thirdQuestion: '',
+      birthDate: '',
+      newsletter: false,
       adresses: [
         {
           city: '',
