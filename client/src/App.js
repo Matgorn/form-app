@@ -3,7 +3,7 @@ import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 
-import { Events, EventEdit, Wizard } from './screens';
+import { Events, EventEdit, Wizard, Playground } from './screens';
 import { First, Second, Third } from './screens/Wizard/screens';
 
 import { ErrorNotification } from './components';
@@ -24,6 +24,7 @@ const App = () => {
         <Tabs value={value} onChange={handleChange} aria-label="nav tabs example">
           <Tab LinkComponent={Link} to="/events" label="Events" />
           <Tab LinkComponent={Link} to="/wizard" label="Wizard" />
+          <Tab LinkComponent={Link} to="/playground" label="Playground" />
         </Tabs>
       </Box>
       <ErrorNotification />
@@ -36,6 +37,7 @@ const App = () => {
           <Route path="second" element={<Second />} />
           <Route path="third" element={<Third />} />
         </Route>
+        <Route path="/playground" element={<Playground />} />
       </Routes>
     </div>
   );
