@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Paper, Button, TextField } from '@material-ui/core';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -8,6 +8,9 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { createEvent, updateEvent } from '../../store/events/actions';
+
+import { SomeContext } from '../../screens/Events/Events';
+import { Typography } from '@mui/material';
 
 const schema = {
   firstName: '',
@@ -26,10 +29,11 @@ const validationSchema = yup.object({
   eventDate: yup.date('Enter valid date').required('This field is required')
 });
 
-const Form = ({ handleModalClose, initialValues = schema, eventId = null }) => {
+const Form = ({ handleModalClose, initialValues = schema, eventId = null, createForm = false }) => {
   const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const context = useContext(SomeContext);
 
   const {
     handleSubmit,
@@ -65,6 +69,12 @@ const Form = ({ handleModalClose, initialValues = schema, eventId = null }) => {
   return (
     <Paper className={classes.paper}>
       <form onSubmit={handleSubmit}>
+        {createForm && (
+          <Typography variant="h5" component="h2">
+            {context?.contextValue}
+          </Typography>
+        )}
+
         <TextField
           className={classes.field}
           fullWidth

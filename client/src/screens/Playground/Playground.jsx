@@ -1,7 +1,9 @@
 import React, { useCallback } from 'react';
+import { useTitle } from 'react-use';
 import { Field, Form, Formik } from 'formik';
 
 const Playground = ({ onSubmit }) => {
+  useTitle("Let's play");
   const handleFormSubmit = useCallback((values) => () => {
     console.log(values);
     onSubmit(values);

@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
+import { useTitle } from 'react-use';
 
 import { Events, EventEdit, Wizard, Playground } from './screens';
 import { First, Second, Third } from './screens/Wizard/screens';
@@ -12,6 +13,7 @@ import './app.sass';
 import { Tab } from '@mui/material';
 
 const App = () => {
+  useTitle('Evaluation App');
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {

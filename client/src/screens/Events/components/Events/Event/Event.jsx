@@ -1,11 +1,14 @@
-import React, { useCallback, memo } from 'react';
+import React, { useCallback, memo, useContext } from 'react';
 import { Card, CardContent, Typography, Grid, Button } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { deleteEvent } from '../../../../../store/events/actions';
 
+import { SomeContext } from '../../../Events';
+
 const Post = ({ firstName, lastName, eMail, eventDate, _id }) => {
+  const { contextValue } = useContext(SomeContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -21,6 +24,9 @@ const Post = ({ firstName, lastName, eMail, eventDate, _id }) => {
     <Grid item xs={6}>
       <Card>
         <CardContent>
+          <Typography variant="h5" component="h2">
+            {contextValue}
+          </Typography>
           <Typography variant="h5" component="h2">
             {firstName} {lastName}
           </Typography>
