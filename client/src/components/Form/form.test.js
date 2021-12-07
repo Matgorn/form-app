@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 
-import Form, { onSubmit } from './Form.js';
+import Form, { onSubmit } from './Form.jsx';
 
 const getInputs = (container) => {
   const firstName = container.querySelector('input[name="firstName"]');

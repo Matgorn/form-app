@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 
 import { Events, EventEdit, Wizard } from './screens';
+import { First, Second, Third } from './screens/Wizard/screens';
 
 import { ErrorNotification } from './components';
 
@@ -30,7 +31,11 @@ const App = () => {
         <Route path="/" element={<Navigate to="/events" />} />
         <Route path="/events" element={<Events />} />
         <Route path="/events/edit/:eventId" element={<EventEdit />} />
-        <Route path="/wizard" element={<Wizard />} />
+        <Route path="wizard" element={<Wizard />}>
+          <Route path="first" element={<First />} />
+          <Route path="second" element={<Second />} />
+          <Route path="third" element={<Third />} />
+        </Route>
       </Routes>
     </div>
   );
